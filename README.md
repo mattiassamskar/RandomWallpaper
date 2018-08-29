@@ -1,2 +1,2 @@
 # RandomWallpaper
-Get a new Windows wallpaper every time you login!
+Get a new Windows background wallpaper every time you login!
