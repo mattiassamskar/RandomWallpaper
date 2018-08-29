@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="RandomWallpaper" Language="1033" Version="1.0.0.0" Manufacturer="Oh Snap! Development" UpgradeCode="555C24C8-0661-495D-BB71-A97C19D802BF">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Icon Id="RandomWallpaper.ico" SourceFile="..\RandomWallpaper\RandomWallpaper.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="RandomWallpaper.ico" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes"/>
+
+    <Feature Id="ProductFeature" Title="RandomWallpaper" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="*">
+        <Shortcut Id="ApplicationStartMenuShortcut" Name="RandomWallpaper" Description="RandomWallpaper" Target="[#RandomWallpaper.exe]" WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\RandomWallpaper" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="RandomWallpaper" />
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="RandomWallpaper"/>
+      </Directory>
+    </Directory>
+
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component>
+        <File Id="RandomWallpaper.exe" Source="..\RandomWallpaper\bin\Release\RandomWallpaper.exe"/>
+      </Component>
+      <Component>
+          <File Id="Newtonsoft.Json.dll" Source="..\RandomWallpaper\bin\Release\Newtonsoft.Json.dll"/>
+      </Component>
+      <Component>
+            <File Id="RandomWallpaper.exe.config" Source="..\RandomWallpaper\bin\Release\RandomWallpaper.exe.config"/>
+      </Component>
+      <Component>
+        <RegistryValue Id="Autostart" Root="HKCU" Action="write" Key="Software\Microsoft\Windows\CurrentVersion\Run" Name="RandomWallpaper" Value="[#RandomWallpaper.exe]" Type="string" />
+      </Component>
+    </ComponentGroup>
+  </Product>
+</Wix>
